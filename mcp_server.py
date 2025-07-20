@@ -1,4 +1,4 @@
-from fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP
 from typing import List, Dict
 import psycopg2
 import os
@@ -7,7 +7,7 @@ from datetime import datetime
 # In-memory mock database with starting balance and empty history
 load_dotenv()
 # Create MCP server
-mcp = FastMCP(name="Expense Tracker1",port=3000)
+mcp = FastMCP(name="Expense Tracker3",port=3000,host="127.0.0.1")
 USER = os.getenv("user")
 PASSWORD = os.getenv("password")
 HOST = os.getenv("host")
@@ -128,10 +128,12 @@ def get_expense_history() -> str:
             SELECT title, expense, date FROM expenses
         """)
         records = cursor.fetchall()
-        
+        if records:
+            total_expense = sum(expense for _, expense, _ in records)
         history = "\n".join(
             [f"{title}: ₹{expense} on {date}" for title, expense, date in records]
         )
+        history += f"\nTotal expenses: ₹{total_expense}"
         return f"Expense history is :\n{history}"
     except Exception as e:
         return f"Error retrieving expense history: {str(e)}"
