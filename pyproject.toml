@@ -6,5 +6,10 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "fastmcp>=2.10.1",
+    "gradio>=5.38.0",
+    "langchain-mcp-adapters>=0.1.9",
+    "langchain-ollama>=0.3.5",
+    "langgraph>=0.5.3",
+    "nest-asyncio>=1.6.0",
     "psycopg2>=2.9.10",
 ]
